@@ -23,7 +23,7 @@ trait TokenTrait
      * @param string $jwt
      * @return Token
      */
-    protected function parseToken(string $jwt)
+    protected function parseToken(string $jwt): Token
     {
         $config = Configuration::forSymmetricSigner(new Sha512(), Key\InMemory::plainText($this->getKeyV2()));
 
@@ -35,7 +35,7 @@ trait TokenTrait
      *
      * @return string
      */
-    protected function getTokenAudience()
+    protected function getTokenAudience(): string
     {
         return env('TOKEN_AUDIENCE', 'https://example.com');
     }
@@ -46,7 +46,7 @@ trait TokenTrait
      * @return \DateTimeImmutable
      * @throws \Throwable
      */
-    protected function getTokenTimeIssuedAt()
+    protected function getTokenTimeIssuedAt(): \DateTimeImmutable
     {
         return new \DateTimeImmutable();
     }
@@ -57,7 +57,7 @@ trait TokenTrait
      * @return \DateTimeImmutable
      * @throws \Throwable
      */
-    protected function getTokenTimeNotBefore()
+    protected function getTokenTimeNotBefore(): \DateTimeImmutable
     {
         $now = new \DateTimeImmutable();
         return $now->modify('+' . env('TOKEN_NOT_BEFORE', 0) . 'seconds');
@@ -77,7 +77,7 @@ trait TokenTrait
      * @return \DateTimeImmutable
      * @throws \Throwable
      */
-    protected function getTokenTimeExpiration()
+    protected function getTokenTimeExpiration(): \DateTimeImmutable
     {
         $now = new \DateTimeImmutable();
         return  $now->modify('+' . env('JWT_TIMEOUT', 86400) . ' seconds');
@@ -104,7 +104,7 @@ trait TokenTrait
      * @return string
      * @throws \Exception
      */
-    protected function getTokenId()
+    protected function getTokenId(): string
     {
         return Uuid::uuid4()->toString();
     }
@@ -116,7 +116,7 @@ trait TokenTrait
      * @return string
      * @throws \Throwable
      */
-    protected function generateToken($user)
+    protected function generateToken($user): string
     {
         $config = Configuration::forSymmetricSigner(new Sha512(), Key\InMemory::plainText($this->getKeyV2()));//使用对称加密算法
 
@@ -142,7 +142,7 @@ trait TokenTrait
      * @return bool
      * @throws \Exception
      */
-    protected function validateToken(string $jwt)
+    protected function validateToken(string $jwt): bool
     {
         $config = Configuration::forSymmetricSigner(new Sha512(), Key\InMemory::plainText($this->getKeyV2()));
 
