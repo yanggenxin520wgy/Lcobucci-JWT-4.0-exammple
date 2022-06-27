@@ -122,7 +122,7 @@ trait TokenTrait
 
         $token = $config->builder()
             ->issuedBy($this->getIssuer())//配置颁发者（iss声明）
-            ->withHeader('iss', $this->getTokenAudience())
+            ->withHeader('iss', $this->getIssuer())
             ->permittedFor($this->getTokenAudience())//配置访问群体（aud声明）
             ->identifiedBy($this->getTokenId())//配置jti声明
             ->relatedTo($this->getTokenSubject())//配置subject
@@ -148,16 +148,14 @@ trait TokenTrait
 
         $token = $config->parser()->parse($jwt);
 
-        $now = new \DateTimeImmutable();
-
         // 验证签发人url是否正确
-        $validate_issued = new IssuedBy($this->getTokenAudience());
+        $validate_issued = new IssuedBy($this->getIssuer());
         // 验证客户端url是否匹配
         $validate_aud = new PermittedFor($this->getTokenAudience());
         // 验证subject是否正确
         $validate_subject = new RelatedTo($this->getTokenSubject());
         //验证有效期
-        $validate_exp = new ValidAt(new FrozenClock($now));
+        $validate_exp = new ValidAt(new FrozenClock(new \DateTimeImmutable()));
 
         $config->setValidationConstraints($validate_issued, $validate_aud, $validate_subject, $validate_exp);
 
