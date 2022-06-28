@@ -3,9 +3,7 @@
 namespace App\Traits;
 
 use Lcobucci\Clock\FrozenClock;
-use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Configuration;
-use Lcobucci\JWT\Parser;
 use Lcobucci\JWT\Signer\Hmac\Sha512;
 use Lcobucci\JWT\Signer\Key;
 use Lcobucci\JWT\Token;
@@ -13,7 +11,6 @@ use Lcobucci\JWT\Validation\Constraint\IssuedBy;
 use Lcobucci\JWT\Validation\Constraint\PermittedFor;
 use Lcobucci\JWT\Validation\Constraint\RelatedTo;
 use Lcobucci\JWT\Validation\Constraint\ValidAt;
-use Lcobucci\JWT\ValidationData;
 use Ramsey\Uuid\Uuid;
 
 trait TokenTrait
