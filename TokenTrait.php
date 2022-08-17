@@ -153,8 +153,11 @@ trait TokenTrait
         $validate_subject = new RelatedTo($this->getTokenSubject());
         //验证有效期
         $validate_exp = new ValidAt(new FrozenClock(new \DateTimeImmutable()));
+        
+        //验证签名
+        $sign = new SignedWith($config->signer(), $config->signingKey());
 
-        $config->setValidationConstraints($validate_issued, $validate_aud, $validate_subject, $validate_exp);
+        $config->setValidationConstraints($sign, $validate_issued, $validate_aud, $validate_subject, $validate_exp);
 
         if (!$config->validator()->validate($token, ...$config->validationConstraints())) {
             return false;
